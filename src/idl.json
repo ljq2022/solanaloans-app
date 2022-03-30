@@ -1,0 +1,154 @@
+{
+  "version": "0.1.0",
+  "name": "solanaloans",
+  "instructions": [
+    {
+      "name": "initialize",
+      "accounts": [
+        {
+          "name": "baseAccount",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "user",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "payLoan",
+      "accounts": [
+        {
+          "name": "baseAccount",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "user",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "createLoan",
+      "accounts": [
+        {
+          "name": "baseAccount",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "user",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": []
+    }
+  ],
+  "accounts": [
+    {
+      "name": "BaseAccount",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "users",
+            "type": {
+              "vec": {
+                "defined": "UserStruct"
+              }
+            }
+          },
+          {
+            "name": "minimumBalance",
+            "type": "u64"
+          },
+          {
+            "name": "loanAmount",
+            "type": "u64"
+          },
+          {
+            "name": "loanRepaymentAmount",
+            "type": "u64"
+          },
+          {
+            "name": "defaultLoanStruct",
+            "type": {
+              "defined": "LoanStruct"
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "types": [
+    {
+      "name": "UserStruct",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "key",
+            "type": "publicKey"
+          },
+          {
+            "name": "loans",
+            "type": {
+              "vec": {
+                "defined": "LoanStruct"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "LoanStruct",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "amount",
+            "type": "u64"
+          },
+          {
+            "name": "isPaid",
+            "type": "bool"
+          },
+          {
+            "name": "repaymentAmount",
+            "type": "u64"
+          },
+          {
+            "name": "creationTime",
+            "type": "i64"
+          }
+        ]
+      }
+    }
+  ],
+  "metadata": {
+    "address": "BBZ2HBi6WbaFtGeXwewBbMe3x4foTcrQNfc4jJUPLt8a"
+  }
+}
