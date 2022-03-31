@@ -253,15 +253,12 @@ const App = () => {
     }
   };
 
-  const getAccountDataCallBack = React.useCallback(() => {
+  useEffect(() => {
     if (walletAddress) {
       getAccountData();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [walletAddress]);
-
-  useEffect(() => {
-    getAccountDataCallBack();
-  }, [getAccountDataCallBack]);
 
   return (
     <div className="App">
