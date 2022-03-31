@@ -28,7 +28,6 @@ const App = () => {
   // State
   const [walletAddress, setWalletAddress] = useState(null);
   const [accountData, setAccountData] = useState("");
-  const [user, setUser] = useState(null);
   const [mostRecentLoan, setMostRecentLoan] = useState(null);
 
   // Actions
@@ -239,11 +238,10 @@ const App = () => {
       setAccountData(account);
       if (account && account.users) {
         const filterForUserArr = account.users.filter(
-          (user) => user.key == walletAddress
+          (user) => user.key.toString() === walletAddress
         );
         if (filterForUserArr && filterForUserArr.length > 0) {
           const user = filterForUserArr[0];
-          setUser(user);
           if (user.loans && user.loans.length > 0) {
             setMostRecentLoan(user.loans[user.loans.length - 1]);
           }
