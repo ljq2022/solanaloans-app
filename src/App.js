@@ -97,6 +97,26 @@ const App = () => {
     }
   };
 
+  const payLoan = async () => {
+    try {
+      const provider = getProvider();
+      const program = new Program(idl, programID, provider);
+
+      await program.rpc.payLoan({
+        accounts: {
+          baseAccount: baseAccount.publicKey,
+          user: provider.wallet.publicKey,
+          systemProgram: SystemProgram.programId,
+        },
+      });
+      console.log("Loan successfully paid.");
+
+      await getAccountData();
+    } catch (error) {
+      console.log("Error paying loan:", error);
+    }
+  };
+
   const createLoanAccount = async () => {
     try {
       const provider = getProvider();
@@ -120,7 +140,7 @@ const App = () => {
     }
   };
 
-  const renderConnectedContainer = () => {
+  const renderConnectedCreateLoanContainer = () => {
     // If we hit this, it means the program account hasn't been initialized.
     if (accountData === null) {
       return (
@@ -161,6 +181,33 @@ const App = () => {
     }
   };
 
+  const renderConnectedPayLoanContainer = () => {
+    // If we hit this, it means the program account hasn't been initialized.
+    if (mostRecentLoan && !mostRecentLoan.isPaid) {
+      return (
+        <div className="connected-container">
+          <form
+            onSubmit={(event) => {
+              event.preventDefault();
+              payLoan();
+            }}
+          >
+            {
+              <button type="submit" className="cta-button submit-gif-button">
+                Pay Loan
+              </button>
+            }
+          </form>
+        </div>
+      );
+    } else {
+      return (
+        <div className="connected-container">
+          You have no outstanding loan to pay.
+        </div>
+      );
+    }
+  };
   const getProvider = () => {
     const connection = new Connection(network, opts.preflightCommitment);
     const provider = new Provider(
@@ -223,7 +270,8 @@ const App = () => {
           <p className="sub-text">Take out a loan</p>
           {!walletAddress && renderNotConnectedContainer()}
           {/* We just need to add the inverse here! */}
-          {walletAddress && renderConnectedContainer()}
+          {walletAddress && renderConnectedCreateLoanContainer()}
+          {walletAddress && renderConnectedPayLoanContainer()}
         </div>
       </div>
     </div>
