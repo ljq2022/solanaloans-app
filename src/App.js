@@ -256,6 +256,7 @@ const App = () => {
   useEffect(() => {
     if (walletAddress) {
       console.log("Fetching Loan Account...");
+      // eslint-disable-next-line react-hooks/exhaustive-deps
       getAccountData();
     }
   }, [walletAddress]);
